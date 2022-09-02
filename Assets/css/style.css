@@ -1,0 +1,65 @@
+.navbar-brand {
+    color: white;
+}
+
+.navbar {
+    background-color: blue;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+header {
+    background: linear-gradient(120deg,deepskyblue, blue);
+    color: white;
+    text-align: center;
+}
+.aside {
+    margin-left: 20px;
+    width: 350px;
+    display: inline-block;
+    flex-wrap: wrap;
+}
+.search-input {
+    width: 350px;
+}
+
+#cityTextInput {
+text-transform: capitalize;
+}
+.btn {
+    width: 350px;
+    margin-top: 5px;
+}
+#current-icon {
+    border: 2px, solid, black;
+}
+.current-search {
+    /* border: 1px solid black; */
+    border-radius: 5px;
+    width: 700px;
+    margin-right: 0px;
+    margin-left: 20px;
+    padding: 20px 20px;
+    display: inline-block;
+}
+.five-day-forecast {
+    display: flex;
+    padding-top: 25px;
+    margin-left: 20px;
+}
+.card {
+    flex-wrap: wrap;
+    width: 200px;
+    /* color: white; */
+    margin: 10px;
+}
+h4 {
+    margin: 5px;
+}
+.card p {
+    margin: 5px;
+}
+
