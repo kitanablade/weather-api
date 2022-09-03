@@ -68,3 +68,31 @@ h4 {
     font-size: xx-large;
     font-weight: bold;
 }
+
+.badge{
+background-color: red;
+  color: white;
+  padding: 4px 8px;
+  text-align: center;
+  border-radius: 5px;
+}
+
+#badge-low{
+    background-color: green;
+}
+
+#badge-mod{
+    background-color: yellow;
+}
+
+#badge-high{
+    background-color: orange;
+}
+
+#badge-vhigh{
+    background-color: red;
+}
+
+#badge-extreme{
+    background-color: violet;
+}
