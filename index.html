@@ -30,6 +30,10 @@ Forecast Cards
       crossorigin="anonymous"
     />
     <link rel="stylesheet" href="./Assets/css/style.css" />
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"
+    ></script>
   </head>
   <body>
     <nav class="navbar">
@@ -37,63 +41,76 @@ Forecast Cards
         <span class="navbar-brand mb-0 h1">Weather Dashboard</span>
       </div>
     </nav>
-    <aside class="search-conatiner col-3" >
+    <aside class="search-conatiner col-3">
       <h2>Find your city's weather:</h2>
-      <input class="form-control col-xs-3 search-input" id="cityTextInput" placeholder="Type city name here">
-      <button type="submit" class="btn btn-primary" id="search-btn" onclick="getSrchInput(event)">Search</button>
-  <hr>
+      <input
+        class="form-control col-xs-3 search-input"
+        id="cityTextInput"
+        placeholder="Type city name here"
+      />
+      <button
+        type="submit"
+        class="btn btn-primary"
+        id="search-btn"
+        onclick="getSrchInput(event)"
+      >
+        Search
+      </button>
+      <hr />
       <div class="past-searches col-6 mx-auto" id="append"></div>
     </aside>
-  
-  <section class="current-search">
-      <h2 id="current-city">
-      </h2>
-      <h3 id="today"></h3>
+
+    <section class="main-display">
+      <h1 class="current-cond"></h1>
+      <h2 id="current-city"></h2>
+      <h5 id="sky-cond-icon"></h5>
       <div id="current-temp"></div>
       <div id="current-wind"></div>
       <div id="current-humidity"></div>
       <div id="current-uv"></div>
-  </section>
-  
-  <section class="five-day-forecast">
+    </section>
+
+    <section class="five-day-forecast">
       <h3 id="5-day-title">5-Day Forecast:</h3>
-      <br>
+      <br />
       <div class="card">
-              <h4 id="day-one-date"></h4>
-              <p id="day-one-icon"></p>
-              <p id="day-one-temp"></p>
-              <p id="day-one-wind"></p>
-              <p id="day-one-humidity"></p>
-      </div>   
-      <div class="card">
-              <h4 id="day-two-date"></h4>
-              <p id="day-two-icon"></p>
-              <p id="day-two-temp"></p>
-              <p id="day-two-wind"></p>
-              <p id="day-two-humidity"></p>
-      </div>   
-      <div class="card">
-              <h4 id="day-three-date"></h4>
-              <p id="day-three-icon"></p>
-              <p id="day-three-temp"></p>
-              <p id="day-three-wind"></p>
-              <p id="day-three-humidity"></p>
-      </div>   
-      <div class="card">
-              <h4 id="day-four-date"></h4>
-              <p id="day-four-icon"></p>
-              <p id="day-four-temp"></p>
-              <p id="day-four-wind"></p>
-              <p id="day-four-humidity">
+        <h4 id="day-one-date"></h4>
+        <p id="day-one-icon"></p>
+        <p id="day-one-temp"></p>
+        <p id="day-one-wind"></p>
+        <p id="day-one-humidity"></p>
       </div>
       <div class="card">
-              <h4 id="day-five-date"></h4>
-              <p id="day-five-icon"></p>
-              <p id="day-five-temp"></p>
-              <p id="day-five-wind"></p>
-              <p id="day-five-humidity"></p>
-      </div>    
-  </section>
-  <script src="./assets/js/script.js"></script>
+        <h4 id="day-two-date"></h4>
+        <p id="day-two-icon"></p>
+        <p id="day-two-temp"></p>
+        <p id="day-two-wind"></p>
+        <p id="day-two-humidity"></p>
+      </div>
+      <div class="card">
+        <h4 id="day-three-date"></h4>
+        <p id="day-three-icon"></p>
+        <p id="day-three-temp"></p>
+        <p id="day-three-wind"></p>
+        <p id="day-three-humidity"></p>
+      </div>
+      <div class="card">
+        <h4 id="day-four-date"></h4>
+        <p id="day-four-icon"></p>
+        <p id="day-four-temp"></p>
+        <p id="day-four-wind"></p>
+        <p id="day-four-humidity"></p>
+      </div>
+
+      <div class="card">
+        <h4 id="day-five-date"></h4>
+        <p id="day-five-icon"></p>
+        <p id="day-five-temp"></p>
+        <p id="day-five-wind"></p>
+        <p id="day-five-humidity"></p>
+      </div>
+    </section>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <script src="./assets/js/script.js"></script>
   </body>
 </html>

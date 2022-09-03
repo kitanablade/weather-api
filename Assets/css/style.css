@@ -6,10 +6,11 @@
     background-color: blue;
 }
 
-* {
-    margin: 0;
-    padding: 0;
+.body {
+    margin: 20;
+    padding: 20;
     box-sizing: border-box;
+    border: 5px;
 }
 header {
     background: linear-gradient(120deg,deepskyblue, blue);
@@ -36,7 +37,7 @@ text-transform: capitalize;
 #current-icon {
     border: 2px, solid, black;
 }
-.current-search {
+.main-display {
     /* border: 1px solid black; */
     border-radius: 5px;
     width: 700px;
@@ -62,4 +63,8 @@ h4 {
 .card p {
     margin: 5px;
 }
-
+ 
+#current-temp {
+    font-size: xx-large;
+    font-weight: bold;
+}
