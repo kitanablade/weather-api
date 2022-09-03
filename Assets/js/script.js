@@ -1,35 +1,43 @@
 let now = moment();
 let currentDay = now.format("MMM Do, YYYY");
 const openWXapiKey = "ddeaf2e65b5db636874978d44d4454d3";
+const searchContainer = document.querySelector(".search-conatiner");
+
+// Get set of cities out of local storage. If this is the first time the user accesses the
+// app, create one.
+// TODO: make array a set to avoid duplicates
+let citiesArray = JSON.parse(localStorage.getItem("cities"));
+if (citiesArray != null) {
+  for (let i = 0; i < citiesArray.length; i++) {
+    let cityBtn = document.createElement("button");
+    cityName = citiesArray[i];
+    cityBtn.innerHTML = cityName;
+    cityBtn.setAttribute("type", "button");
+    cityBtn.setAttribute("class", "city-button");
+    cityBtn.setAttribute("id", "city-btn-" + i);
+    cityBtn.setAttribute("onclick", "getSavedCity(this)");
+    searchContainer.append(cityBtn);
+  }
+}
+// localStorage.setItem("cities", JSON.stringify(citiesArray));
+// console.log(localStorage);
+
+function getSavedCity(button) {
+  getWXdata(button.textContent);
+}
 
 function getSrchInput(event) {
   event.preventDefault();
   // Get raw city input, then capitalize the first letter
   inputCity = document.querySelector("#cityTextInput").value;
-  searchContainer = document.querySelector(".search-conatiner");
   let city = inputCity.charAt(0).toUpperCase() + inputCity.slice(1);
-  // Get set of cities out of local storage. If this is the first time the user accesses the
-  // app, create one.
-  // TODO: make array a set to avoid duplicates
-  let citiesArray = JSON.parse(localStorage.getItem("cities"));
+  getWXdata(city);
   if (citiesArray === null) {
     localStorage.setItem("cities", JSON.stringify([city]));
   } else {
-
-    for (let i = 0; i < citiesArray.length; i++) {
-      let cityBtn = document.createElement("button");
-      cityName = citiesArray[i];
-      cityBtn.innerHTML = cityName;
-      cityBtn.setAttribute("id", "city-btn-"+i);
-      cityBtn.setAttribute("class", "city-button");
-      cityBtn.setAttribute("onclick", "getSavedCity()");
-      searchContainer.append(cityBtn);
-       }
-
     citiesArray.push(city);
     localStorage.setItem("cities", JSON.stringify(citiesArray));
   }
-  getWXdata(city);
 }
 
 //document.addEventListener("click", "city-button");
@@ -78,8 +86,7 @@ function getWXdata(city) {
             return response.json();
           })
           .then(function (data) {
-
-           let uvIndex = data.current.uvi;
+            let uvIndex = data.current.uvi;
             let uvColor = "";
             let exposureLevel = "TEST";
             console.log(data);
@@ -109,45 +116,43 @@ function getWXdata(city) {
               ".uv-index"
             ).innerHTML = `UV Index: <span class="badge" id="${uvColor}">${uvIndex}</span> ${exposureLevel}`;
 
-          let forecastDays = 5;
-          let forecastContainer = document.querySelector(".five-day-forecast");
-          // Check to see if there are existing 5-day forecast cards. If so, remove them so 
-          // the next run of the for loop does not add more on top of them
-          // if(forecastContainer.firstChild != null){
+            let forecastDays = 5;
+            let forecastContainer =
+              document.querySelector(".five-day-forecast");
+            // Check to see if there are existing 5-day forecast cards. If so, remove them so
+            // the next run of the for loop does not add more on top of them
+            // if(forecastContainer.firstChild != null){
             //forecastContainer.removeChild("forecast-card");
-          // }
+            // }
 
+            for (let i = 0; i < forecastDays; i++) {
+              let temp = Math.round(data.daily[i].temp.day);
+              console.log("TEMP: ", temp);
+              let wind = Math.round(data.daily[i].wind_speed);
+              let humidity = data.daily[i].humidity;
+              let dailyWXIcon = `http://openweathermap.org/img/w/${data.daily[i].weather[0].icon}.png`;
+              let forecastDay = moment(currentDay, "MMMM-DD").add(
+                i + 1,
+                "days"
+              );
+              forecastDay = forecastDay.format("ddd MMM D");
 
-          for (let i = 0; i < forecastDays; i++) {
-            let temp = Math.round(data.daily[i].temp.day);
-            console.log("TEMP: ", temp)
-            let wind = Math.round(data.daily[i].wind_speed);
-            let humidity = data.daily[i].humidity;
-            let dailyWXIcon = `http://openweathermap.org/img/w/${data.daily[i].weather[0].icon}.png`;
-            let forecastDay = moment(currentDay, "MMMM-DD").add(i+1, 'days');
-            forecastDay = forecastDay.format('ddd MMM D')
-            
-            const forecastCard = document.createElement("div");
-            forecastCard.setAttribute("id", "day-" + (i+1) + "-forecast");
-            forecastCard.setAttribute("class", "forecast-card")
-            let tempEl = document.createElement("h2");
-            let windEl = document.createElement("h4");
-            let humidEl = document.createElement("h4");
-            let dayIcon = document.createElement("div");
-            let dateEl = document.createElement("h2");
-            dayIcon.innerHTML = `<img class="day-icon" src=${dailyWXIcon}>`
-            tempEl.innerHTML=`${temp}&#8457`;
-            windEl.innerHTML=`Wind: ${wind} MPH`;
-            humidEl.innerHTML = `Humidity: ${humidity} %`;
-            forecastContainer.append(forecastCard);
-            dateEl.innerHTML = forecastDay;
-            forecastCard.append(dateEl, tempEl, windEl, humidEl, dayIcon);
-
-         
-           }
-
-
-
+              const forecastCard = document.createElement("div");
+              forecastCard.setAttribute("id", "day-" + (i + 1) + "-forecast");
+              forecastCard.setAttribute("class", "forecast-card");
+              let tempEl = document.createElement("h2");
+              let windEl = document.createElement("h4");
+              let humidEl = document.createElement("h4");
+              let dayIcon = document.createElement("div");
+              let dateEl = document.createElement("h2");
+              dayIcon.innerHTML = `<img class="day-icon" src=${dailyWXIcon}>`;
+              tempEl.innerHTML = `${temp}&#8457`;
+              windEl.innerHTML = `Wind: ${wind} MPH`;
+              humidEl.innerHTML = `Humidity: ${humidity} %`;
+              forecastContainer.append(forecastCard);
+              dateEl.innerHTML = forecastDay;
+              forecastCard.append(dateEl, tempEl, windEl, humidEl, dayIcon);
+            }
           });
       });
   }
