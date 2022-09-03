@@ -30,7 +30,6 @@ function getSrchInput(event) {
   } else {
     citiesArray.push(city);
     localStorage.setItem("cities", JSON.stringify(citiesArray));
-    console.log("Local Storage: ", citiesArray);
   }
   getWXdata(city);
 }
@@ -42,7 +41,6 @@ function getWXdata(city) {
     "&appid=" +
     openWXapiKey +
     "&units=imperial";
-  console.log(currWeatherURL);
   if (city === null) {
     return alert("Sorry, that city wasn't found. Please try again.");
   } else {
@@ -71,7 +69,6 @@ function getWXdata(city) {
         document.querySelector("#current-humidity").innerHTML =
           "Humidity: " + data.main.humidity + " %";
 
-        console.log(data);
         let lat = data.coord.lat;
         let long = data.coord.lon;
         var forcastquery = `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${long}&exclude=hourly,minutely&appid=${openWXapiKey}&units=imperial`;
@@ -81,12 +78,11 @@ function getWXdata(city) {
             return response.json();
           })
           .then(function (data) {
-            console.log(data);
 
            let uvIndex = data.current.uvi;
             let uvColor = "";
             let exposureLevel = "TEST";
-            console.log("UV Index: ", uvIndex);
+            console.log(data);
             switch (true) {
               case uvIndex < 2:
                 uvColor = "badge-low";
@@ -108,11 +104,50 @@ function getWXdata(city) {
                 uvColor = "badge-extreme";
                 exposureLevel = "Extreme";
             }
-            console.log("Color: ", uvColor);
 
             document.querySelector(
               ".uv-index"
             ).innerHTML = `UV Index: <span class="badge" id="${uvColor}">${uvIndex}</span> ${exposureLevel}`;
+
+          let forecastDays = 5;
+          let forecastContainer = document.querySelector(".five-day-forecast");
+          // Check to see if there are existing 5-day forecast cards. If so, remove them so 
+          // the next run of the for loop does not add more on top of them
+          // if(forecastContainer.firstChild != null){
+          //   forecastContainer.removeChild("forecast-card");
+          // }
+
+
+          for (let i = 0; i < forecastDays; i++) {
+            let temp = Math.round(data.daily[i].temp.day);
+            console.log("TEMP: ", temp)
+            let wind = Math.round(data.daily[i].wind_speed);
+            let humidity = data.daily[i].humidity;
+            let dailyWXIcon = `http://openweathermap.org/img/w/${data.daily[i].weather[0].icon}.png`;
+            let forecastDay = moment(currentDay, "MMMM-DD").add(i+1, 'days');
+            forecastDay = forecastDay.format('MMM D')
+            
+            const forecastCard = document.createElement("div");
+            forecastCard.setAttribute("id", "day-" + (i+1) + "-forecast");
+            forecastCard.setAttribute("class", "forecast-card")
+            let tempEl = document.createElement("h2");
+            let windEl = document.createElement("h4");
+            let humidEl = document.createElement("h4");
+            let dayIcon = document.createElement("div");
+            let dateEl = document.createElement("h2");
+            dayIcon.innerHTML = `<img class="day-icon" src=${dailyWXIcon}>`
+            tempEl.innerHTML=`${temp}&#8457`;
+            windEl.innerHTML=`Wind: ${wind} MPH`;
+            humidEl.innerHTML = `Humidity: ${humidity} %`;
+            forecastContainer.append(forecastCard);
+            dateEl.innerHTML = forecastDay;
+            forecastCard.append(dateEl, tempEl, windEl, humidEl, dayIcon);
+
+         
+           }
+
+
+
           });
       });
   }

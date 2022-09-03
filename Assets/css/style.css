@@ -1,3 +1,9 @@
+body {
+    margin: 20;
+    padding: 20;
+    box-sizing: border-box;
+    border: 5px;
+}
 .navbar-brand {
     color: white;
 }
@@ -6,12 +12,6 @@
     background-color: blue;
 }
 
-.body {
-    margin: 20;
-    padding: 20;
-    box-sizing: border-box;
-    border: 5px;
-}
 header {
     background: linear-gradient(120deg,deepskyblue, blue);
     color: white;
@@ -51,11 +51,12 @@ text-transform: capitalize;
     padding-top: 25px;
     margin-left: 20px;
 }
-.card {
+.forecast-card {
     flex-wrap: wrap;
-    width: 200px;
+    width: 250px;
     /* color: white; */
     margin: 10px;
+    background-color: aqua;
 }
 h4 {
     margin: 5px;
