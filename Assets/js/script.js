@@ -124,6 +124,10 @@ function getWXdata(city) {
             // if(forecastContainer.firstChild != null){
             //forecastContainer.removeChild("forecast-card");
             // }
+            let fiveDayTitle = document.createElement('h3');
+            fiveDayTitle.setAttribute("id", "five-day-title");
+            fiveDayTitle.innerHTML = "5-Day Forecast:";
+            forecastContainer.append(fiveDayTitle);
 
             for (let i = 0; i < forecastDays; i++) {
               let temp = Math.round(data.daily[i].temp.day);

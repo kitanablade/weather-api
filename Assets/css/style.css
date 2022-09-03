@@ -17,7 +17,7 @@ header {
     color: white;
     text-align: center;
 }
-.aside {
+aside {
     margin-left: 20px;
     width: 350px;
     display: inline-block;
@@ -38,7 +38,6 @@ text-transform: capitalize;
     border: 2px, solid, black;
 }
 .main-display {
-    /* border: 1px solid black; */
     border-radius: 5px;
     width: 700px;
     margin-right: 0px;
