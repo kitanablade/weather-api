@@ -1,25 +1,12 @@
 let now = moment();
 let currentDay = now.format("MMM Do, YYYY");
-// const openWXapiKey = "a8d8c2258511aba345cf88e92d799e37";
 const openWXapiKey = "ddeaf2e65b5db636874978d44d4454d3";
-/*
-Search or saved buttons onclick ->
-
-getWXdata(cityName){
-    if city = null, polite error message
-    if city ! null:
-    get data from API
-    populate info on main display
-    populate info on cards (loop)}
-    add city to set, local storage
-
-    loop through set and create buttons
-*/
 
 function getSrchInput(event) {
   event.preventDefault();
   // Get raw city input, then capitalize the first letter
   inputCity = document.querySelector("#cityTextInput").value;
+  searchContainer = document.querySelector(".search-conatiner");
   let city = inputCity.charAt(0).toUpperCase() + inputCity.slice(1);
   // Get set of cities out of local storage. If this is the first time the user accesses the
   // app, create one.
@@ -28,11 +15,24 @@ function getSrchInput(event) {
   if (citiesArray === null) {
     localStorage.setItem("cities", JSON.stringify([city]));
   } else {
+
+    for (let i = 0; i < citiesArray.length; i++) {
+      let cityBtn = document.createElement("button");
+      cityName = citiesArray[i];
+      cityBtn.innerHTML = cityName;
+      cityBtn.setAttribute("id", "city-btn-"+i);
+      cityBtn.setAttribute("class", "city-button");
+      cityBtn.setAttribute("onclick", "getSavedCity()");
+      searchContainer.append(cityBtn);
+       }
+
     citiesArray.push(city);
     localStorage.setItem("cities", JSON.stringify(citiesArray));
   }
   getWXdata(city);
 }
+
+//document.addEventListener("click", "city-button");
 
 function getWXdata(city) {
   const currWeatherURL =
@@ -114,7 +114,7 @@ function getWXdata(city) {
           // Check to see if there are existing 5-day forecast cards. If so, remove them so 
           // the next run of the for loop does not add more on top of them
           // if(forecastContainer.firstChild != null){
-          //   forecastContainer.removeChild("forecast-card");
+            //forecastContainer.removeChild("forecast-card");
           // }
 
 
@@ -125,7 +125,7 @@ function getWXdata(city) {
             let humidity = data.daily[i].humidity;
             let dailyWXIcon = `http://openweathermap.org/img/w/${data.daily[i].weather[0].icon}.png`;
             let forecastDay = moment(currentDay, "MMMM-DD").add(i+1, 'days');
-            forecastDay = forecastDay.format('MMM D')
+            forecastDay = forecastDay.format('ddd MMM D')
             
             const forecastCard = document.createElement("div");
             forecastCard.setAttribute("id", "day-" + (i+1) + "-forecast");
