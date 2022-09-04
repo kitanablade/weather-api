@@ -24,7 +24,7 @@ WHEN I click on a city in the search history
 THEN I am again presented with current and future conditions for that city
 ```
 # Screenshot
-![Screenshot of the finished site](assets/images/WX-dash-screenshot.png)
+![Screenshot of the finished site](./Assets/images/WX-dash-screenshot.png)
 
 Repo: https://github.com/kitanablade/weather-api
 Site: https://kitanablade.github.io/weather-api/
